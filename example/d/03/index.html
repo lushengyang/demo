@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>放大镜效果</title>
+    <style>
+        body{
+            padding: 0;
+            margin: 0;
+        }
+        body{
+            background: #daaa9e;
+        }
+        .warp{
+            width: 1100px;
+            margin: 100px auto;
+        }
+        #small{
+            border: 1px solid #000000;
+            position: relative;
+            width: 300px;
+            float: left;
+        }
+        #small img{
+            width: 300px;
+            display: block;
+        }
+        #hide{
+            height: 100px;
+            width: 100px;
+            background: #ffd9ca;
+            opacity: .5;
+            position: absolute;
+            top: 0;
+            left: 0;
+            cursor: pointer;
+            display: none;
+        }
+        #big{
+            width: 640px;
+            height: 640px;
+            margin-left: 50px;
+            position: relative;
+            float: left;
+            overflow: hidden;
+            display: none;
+        }
+        #big img{
+            display: block;
+            position: absolute;
+        }
+    </style>
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script>
+        $(function () {
+            var $small = $('#small');
+            var $hide = $('#hide');
+            var $big = $('#big');
+            var $img = $big.children('img');
+            var oImg = new Image();
+            var oH = 0;
+            oImg.onload = function () {
+                oH = $small.outerHeight();
+                loadFn();
+            };
+            oImg.src = '../img/mm01.jpg';
+            function loadFn() {
+                console.log('oH: '+ oH +'');
+                moveFn();
+            }
+            function moveFn() {
+                mouseIn();
+                mouseOut();
+            }
+            //鼠标移入
+            function mouseIn() {
+                //控制小图片种div的移动
+                $small.on('mouseenter',function (ev) {
+                    $hide.fadeIn('fast');
+                    $big.fadeIn('fast');
+                    var disX = ev.pageX - $(this).offset().left - 50;
+                    var disY = ev.pageY - $(this).offset().top - 50;
+                    disX = limitXFn(disX);
+                    disY = limitYFn(disY);
+                    console.log('disX: '+ disX +'');
+                    console.log('disY: '+ disY +'');
+                    $hide.css({
+                        'left':disX,
+                        'top':disY
+                    });
+                    $small.on('mousemove',mouseMove);
+                });
+            }
+            //鼠标移开
+            function mouseOut() {
+                $small.on('mouseleave',function () {
+                    $hide.fadeOut('fast');
+                    $big.fadeOut('fast');
+                });
+            }
+//            控制方块移动范围
+            function limitXFn(n) {
+                if (n<0){
+                    n = 0;
+                }else if (n>200){
+                    n = 200;
+                }
+                return n;
+            }
+            function limitYFn(n) {
+                if (n<0){
+                    n = 0;
+                }else if (n>oH-100){
+                    n = oH-100;
+                }
+                return n;
+            }
+            //方块随鼠标移动
+            function mouseMove(ev) {
+                var L = ev.pageX - $small.offset().left - 50;
+                var T = ev.pageY - $small.offset().top - 50;
+                L = limitXFn(L);
+                T = limitYFn(T);
+                $hide.css({
+                    'left':L,
+                    'top':T
+                });
+                //背景变化
+                $img.css({
+                   'left': -L*6.4,
+                   'top': -T*6.4
+                });
+            }
+        })
+    </script>
+</head>
+<body>
+<div class="warp">
+    <div id="small">
+        <img src="../img/mm01.jpg" alt="图片">
+        <div id="hide"></div>
+    </div>
+    <div id="big">
+        <img src="../img/mm01.jpg">
+    </div>
+</div>
+</body>
+</html>

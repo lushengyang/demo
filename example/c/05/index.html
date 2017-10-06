@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>图片淡入淡出切换</title>
+    <link rel="stylesheet" href="css.css">
+    <script>
+        window.onload = function () {
+            var aImages = ["img/advert01.jpg","img/advert02.jpg","img/advert03.jpg","img/advert04.jpg","img/advert05.jpg"];
+            var aInfo = ["微信支付震撼来袭","星品汇.精品“惠”","秋日静美肌","美发护卫队","人气特卖场"];
+            var oImg = document.getElementById('images').getElementsByTagName('img')[0];
+            var oInfo = document.getElementById('info');
+            var l = 0;
+            var timer = null;
+            var autoNum = 0;
+            //图片预加载
+            for (var i=0;i<aImages.length;i++){
+                (function (i) {
+                    //图片预加载
+                    var oNewImg = new Image();
+                    oNewImg.src = aImages[i];//加载图片
+                })(i);
+            }
+            //初始化
+            for (var i=0;i<aInfo.length;i++){
+                oInfo.innerHTML += '<span>'+aInfo[i]+'</span>';
+            }
+            var aSpan = oInfo.getElementsByTagName('span');
+            aSpan[0].className = 'active';
+            aSpan[aSpan.length-1].style.margin = 0 +'px';
+            var oW = (oInfo.offsetWidth - (aSpan.length-1))/aSpan.length;
+
+            //自动切换
+            auto();
+            function auto() {
+                timer = setInterval(function () {
+                    autoNum++;
+                    autoNum%=5;
+                    move(autoNum);
+                },3000);
+            }
+            //鼠标移入停止、移开重新开始
+            oInfo.onmouseover = function () {
+              clearInterval(timer);
+              timer = null;
+            };
+            oInfo.onmouseout = function () {
+              auto();
+            };
+            //点击切换图片
+            for (var i=0;i<aSpan.length;i++){
+                aSpan[i].index = i;
+                aSpan[i].style.width = oW + 'px';
+                aSpan[i].onclick = function () {
+                    if (this.className =='active'){
+                        return;
+                    }
+                    l = this.index;
+                    move(l);
+                }
+            }
+            function move(num) {
+                for (var j=0;j<aSpan.length;j++){
+                    aSpan[j].className = '';
+                }
+                aSpan[num].className = 'active';
+                fadeOut(oImg,function () {
+                    oImg.src = aImages[num];
+                    fadeIn(oImg);
+                })
+            }
+            function fadeOut(obj,fn) {
+                obj.timer = setInterval(function () {
+                  var outNow = getStyle(obj,'opacity');
+                    obj.style.opacity -= 0.1;
+                    if (outNow <= 0){
+                        clearInterval(obj.timer);
+                        fn&&fn();
+                    }
+                },20);
+            }
+            function fadeIn(obj, fn) {
+                var o = 0;
+                obj.timers = setInterval(function () {
+                    var inNow = getStyle(obj,'opacity');
+                    o += 0.1;
+                    obj.style.opacity = o;
+                    if (inNow >= 1){
+                        clearInterval(obj.timers);
+                        fn&&fn();
+                    }
+                },20);
+            }
+            function getStyle(elem,attr){
+                if(window.getComputedStyle){
+                    return window.getComputedStyle(elem)[attr];
+                }else{
+                    return elem.currentStyle[attr];
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <div id="warp">
+        <div id="images">
+            <a href="javascript:;" style="height: 100%;">
+                <img src="img/advert01.jpg" alt="">
+            </a>
+        </div>
+        <div id="info">
+        </div>
+    </div>
+</body>
+</html>

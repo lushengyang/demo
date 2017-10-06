@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>模拟鼠标右键菜单</title>
+    <style>
+        ul,li{
+            padding: 0;
+            margin: 0;
+        }
+        ul{
+            width: 100px;
+            border: 1px solid black;
+            position: absolute;
+            display: none;
+        }
+        li{
+            list-style: none;
+            height: 30px;
+            line-height: 30px;
+            text-indent: 5px;
+            cursor: pointer;
+            border-bottom: 1px solid black;
+            background: #ffffff;
+        }
+        li:hover{
+            background: red;
+        }
+        ul li:last-child{
+            border-bottom: none !important;
+        }
+        /*.live1{*/
+            /*top: 0;*/
+            /*left: 0;*/
+        /*}*/
+        /*.live2-1{*/
+            /*display: none;*/
+            /*top: 15px;*/
+            /*left: 95px;*/
+        /*}*/
+        /*.live2-2{*/
+            /*display: none;*/
+            /*top: 45px;*/
+            /*left: 95px;*/
+        /*}*/
+        /*.live2-3{*/
+            /*!*display: none;*!*/
+            /*top: 105px;*/
+            /*left: 95px;*/
+        /*}*/
+        /*.live3{*/
+            /*!*display: none;*!*/
+            /*top: 120px;*/
+            /*left: 190px;*/
+        /*}*/
+    </style>
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script>
+        $(function () {
+            //屏蔽浏览器默认的右键菜单
+            document.oncontextmenu = function () {
+              return false;
+            };
+            $(document).on('mousedown',function (ev) {
+                var disX = ev.pageX;
+                var disY = ev.pageY;
+
+                if ( ev.which == 3){
+
+                    $('.live1').css('top',disY).css('left',disX).show();
+                    $('.live2-1').css('top',disY+15).css('left',disX+95);
+                    $('.live2-2').css('top',disY+45).css('left',disX+95);
+                    $('.live2-3').css('top',disY+105).css('left',disX+95);
+                    $('.live3').css('top',disY+120).css('left',disX+190);
+
+                    $('.live1').children('li').eq(0).on('mouseenter',function () {
+                       $('.live2-1').show();
+                    });
+                    $('.live1').children('li').eq(0).on('mouseleave',function () {
+                        $('.live2-1').hide();
+                    });
+
+                    $('.live2-1').on('mouseenter',function () {
+                        $('.live2-1').show();
+                    });
+                    $('.live2-1').on('mouseleave',function () {
+                        $('.live2-1').hide();
+                    });
+
+                    $('.live1').children('li').eq(1).on('mouseenter',function () {
+                        $('.live2-2').show();
+                    });
+                    $('.live1').children('li').eq(1).on('mouseleave',function () {
+                        $('.live2-2').hide();
+                    });
+
+                    $('.live2-2').on('mouseenter',function () {
+                        $('.live2-2').show();
+                    });
+                    $('.live2-2').on('mouseleave',function () {
+                        $('.live2-2').hide();
+                    });
+
+                    $('.live1').children('li').eq(3).on('mouseenter',function () {
+                        $('.live2-3').show();
+                    });
+                    $('.live1').children('li').eq(3).on('mouseleave',function () {
+                        $('.live2-3').hide();
+                    });
+
+                    $('.live2-3').on('mouseenter',function () {
+                        $('.live2-3').show();
+                    });
+                    $('.live2-3').on('mouseleave',function () {
+                        $('.live2-3').hide();
+                    });
+
+                    $('.live2-3').children('li').eq(0).on( 'mouseenter',function () {
+                        $('.live3').show();
+                    } );
+                    $('.live2-3').children('li').eq(0).on( 'mouseleave',function () {
+                        $('.live3').hide();
+                    } );
+
+                    $('.live3').on('mouseenter',function () {
+                        $('.live2-3').show();
+                        $('.live3').show();
+                    });
+                    $('.live3').on('mouseleave',function () {
+                        $('.live2-3').hide();
+                        $('.live3').hide();
+                    });
+
+                }
+//                $('ul').on('mousedown',function (ev) {
+//                    if (ev.which == 1 ){
+//                        $(document).off();
+//                    }
+//                });
+                });
+                $('li').on( 'click',function () {
+                    alert('aaa');
+                    return false;
+                } );
+                $(document).on('mousedown',function (ev) {
+                    if (ev.which == 1 ){
+                        $('ul').hide();
+                    }
+                    return false;
+                })
+            } );
+    </script>
+</head>
+<body>
+<ul class="live1">
+    <li>查看>></li>
+    <li>排序方式>></li>
+    <li>刷新</li>
+    <li>新建>></li>
+    <li>个性化</li>
+</ul>
+<ul class="live2-1">
+    <li>大图标</li>
+    <li>中等图标</li>
+    <li>小图标</li>
+    <li>自动对齐</li>
+</ul>
+<ul class="live2-2">
+    <li>名称</li>
+    <li>大小</li>
+    <li>修改日期</li>
+    <li>项目类型</li>
+</ul>
+<ul class="live2-3">
+    <li>文件夹>></li>
+    <li>text文档</li>
+    <li>快捷方式</li>
+    <li>图片文件</li>
+    <li>压缩文件</li>
+</ul>
+<ul class="live3">
+    <li>文件夹1</li>
+    <li>文件夹2</li>
+    <li>文件夹3</li>
+</ul>
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>正则验证用户输入格式</title>
+    <style>
+        .warp {
+            width: 700px;
+            margin: 0 auto;
+        }
+        .warp p{
+            width: 700px;
+            height: 42px;
+
+        }
+        .warp label{
+            float: left;
+            height: 42px;
+            width: 65px;
+            text-align: right;
+            margin-right: 10px;
+            font: 700 14px/42px Arial,"宋体";
+        }
+        .warp p input{
+            float: left;
+            height: 16px;
+            width: 328px;
+            padding: 11px 10px;
+            margin-right: 10px;
+            border: 1px solid #dddddd;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+        }
+        .warp .intro{
+            height: 20px;
+            width: 328px;
+            font: 12px/20px "宋体";
+            text-align: center;
+            margin-left: 75px;
+            color: darkred;
+        }
+        .warp p span{
+            float: left;
+            height: 22px;
+            margin: 10px 0;
+            font-size: 12px;
+            line-height: 22px;
+            text-indent: 20px;
+            display: none;
+            background: url("../images/reg_icons.png") no-repeat -80px 5px;
+        }
+    </style>
+    <script>
+        window.onload = function () {
+            var oWarp = getElement(".warp")[0];
+            var aInput = getElement(".register",oWarp);
+            var peopleRe = /^\d|[a-z]{4,10}$/;
+            var passRe = /^[a-zA-Z]w{5,17}$/;
+            var phoneRe = /^1[3|5|8][0-9]\d{8}$/;
+            var emailRe = /^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$/;
+            checkForm(aInput[0],peopleRe);
+            checkForm(aInput[1],passRe);
+            checkForm(aInput[2],phoneRe);
+            checkForm(aInput[3],emailRe);
+
+            function checkForm(obj,re) {
+                obj.onfocus =function () {
+                    var parent = this.parentNode;
+                    var oInfo = getElement("span",parent)[0];//获取每个输入框对应的提示
+                    oInfo.style.display = "none";
+                };
+                obj.onblur = function () {
+                    var infoStr = this.placeholder;//获取提示
+                    var str = this.value;//获取输入框的值
+                    var parent = this.parentNode;
+                    var oInfo = getElement("span",parent)[0];//获取每个输入框对应的提示
+//                    oInfo.style.display = "inline-block";
+                    //判断是否值为空
+                    if (checkNull(str)){
+                        if (checkRe(str,re)){
+                            oInfo.innerHTML = "格式正确";
+                            oInfo.style.cssText = "color:green;display:inline-block;background-position:-80px 5px"
+                        }else {
+                            oInfo.innerHTML = infoStr;
+                            oInfo.style.cssText = "color:red;display:inline-block;background-position:-80px -20px"
+                        }
+                    }else {
+                        oInfo.innerHTML = '请输入内容';
+                        oInfo.style.cssText = "color:red;display:inline-block;background-position:-80px -20px"
+                    }
+                }
+            }
+            //判断是否为空
+            function checkNull(str) {
+                if (str==''){
+                    return false;
+                }else{
+                    return true;
+                }
+            };
+            function checkRe(str,re) {
+                if (re.test(str)){
+                    return true;
+                }else{
+                    return false;
+                }
+            };
+
+            //获取元素函数的封装
+            function getElement(name,parent) {
+                parent = parent||document;//没有传递父级元素，则默认为document
+                //通过id获取元素
+                if (name.charAt(0)==="#"){
+                    return document.getElementById(name.slice(1));
+                }
+                //通过className获取元素
+                if (name.indexOf(".")===0){
+                    return getByClass(name.slice(1),parent);
+                }
+                //通过tagName获取元素
+                return parent.getElementsByTagName(name);
+            };
+            //通过className获取元素的兼容性解决
+            function getByClass(className, parent) {
+                //支持getElementsByClassName的直接调用
+                if (parent.getElementsByClassName){
+                    return parent.getElementsByClassName(className);
+                }
+                //不支持的浏览器
+                var result = [];
+                var tags = parent.getElementsByTagName('*');
+
+                for (var i=0;i<tags.length;i++){
+                    var classNames = tags[i].className.split(" ");
+                    for (var j=0;j<classNames.length;j++){
+                        if (classNames[j]===className){
+                            result.push(tags[i]);
+                            break;
+                        }
+                    }
+                }
+                return result;
+            };
+        }
+    </script>
+</head>
+<body>
+    <div class="warp">
+        <form action="">
+            <p>
+                <label>用户名</label>
+                <input type="text" placeholder="用户名为4~10位数字和字母组成" class="register">
+                <span></span>
+            </p>
+            <p>
+                <label>密码</label>
+                <input type="password" placeholder="以字母开头长度在6~18位之间" class="register">
+                <span></span>
+            </p>
+            <p>
+                <label>手机号码</label>
+                <input type="text" placeholder="13位数字组成的大陆手机号码" class="register">
+                <span></span>
+            </p>
+            <p>
+                <label>email</label>
+                <input type="text" placeholder="邮箱地址" class="register">
+                <span>邮箱地址</span>
+            </p>
+        </form>
+        <p class="intro">
+            说明：失去焦点时会自动验证格式是否正确。
+        </p>
+    </div>
+</body>
+</html>

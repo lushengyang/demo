@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>图片的翻页切换效果</title>
+    <link rel="stylesheet" href="css.css">
+    <script>
+        window.onload = function () {
+
+            var oPrev = document.getElementById('prev');
+            var oNext = document.getElementById('next');
+            var aImg = document.getElementsByTagName('img');
+            var iNow = 0;
+
+            oNext .onclick = function () {
+
+                aImg[iNow].className = "hide";
+                iNow++;
+                if (iNow==aImg.length){
+                    iNow =0;
+                }
+                aImg[iNow].className = "show";
+
+            };
+             oPrev.onclick = function () {
+                aImg[iNow].className = "hide";
+                iNow--;
+                if (iNow<0){
+                    iNow =aImg.length-1;
+                }
+                aImg[iNow].className = "show";
+
+            }
+
+        }
+    </script>
+</head>
+<body>
+    <div id="warp">
+        <div id="img">
+            <img src="img/800_480_1.jpg" alt="" class="show">
+            <img src="img/800_480_2.jpg" alt="">
+            <img src="img/800_480_3.jpg" alt="">
+            <img src="img/800_480_4.jpg" alt="">
+            <img src="img/800_480_5.jpg" alt="">
+            <img src="img/800_480_6.jpg" alt="">
+            <img src="img/800_480_7.jpg" alt="">
+        </div>
+        <a href="javascript:;" id="prev">✖</a>
+        <a href="javascript:;" id="next">✔</a>
+    </div>
+</body>
+</html>

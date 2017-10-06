@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>将单词首字母大写</title>
+    <style>
+        body{
+            background: #badeff;
+        }
+        #warp{
+            width: 380px;
+            margin: 100px auto;
+        }
+        textarea{
+            resize: none;
+            float: left;
+            text-indent: 2em;
+        }
+        #warp div p{
+            margin: 0 0 10px;
+            height: 20px;
+            width: 150px;
+        }
+        #warp #span-left{
+            float: left;
+            text-align: left;
+            font: 12px/20px "宋体";
+            color: darkred;
+            display: none;
+        }
+        #warp #span-right{
+            float: right;
+            text-align: right;
+            font: 14px/20px "宋体";
+            letter-spacing: 2px;
+        }
+        #warp #span-right span{
+            font-size: 15px;
+            font-style: italic;
+            font-weight: 600;
+            color: red;
+            padding-right: 5px;
+        }
+        input{
+            float: right;
+            height: 30px;
+            width: 60px;
+            border:none;
+            outline:none;
+            margin-right: 10px;
+            background: #3f89ec;
+            font: 12px/30px "宋体";
+            color: #ffffff;
+            cursor: pointer;
+        }
+        .clearfix:after{
+            content: ".";
+            display: block;
+            clear: both;
+            height: 0;
+            line-height: 0;
+            visibility: hidden;
+        }
+        .clearfix{
+            zoom: 1;
+        }
+    </style>
+    <script>
+        window.onload = function () {
+            var oW = document.getElementById("warp");
+            var oNotice = document.getElementById("span-left");
+            var oInfo = document.getElementById("span-right");
+            var oSpan = oInfo.getElementsByTagName("span")[0];
+            var oText = oW.getElementsByTagName("textarea")[0];
+            var max = 150;
+            var n = '';
+            oText.oninput = oText.onpropertychange =function () {
+                n = this.value;
+                if (n.length<=150){
+                    oNotice.style.display = "none";
+                    oSpan.innerHTML = max - n.length;
+                }else{
+                    oNotice.style.display = "inline-block";
+                    this.value = n.substring(0,150);
+                    oSpan.innerHTML = 0;
+                };
+            };
+        }
+    </script>
+</head>
+<body>
+<div id="warp" class="clearfix">
+    <textarea cols="50" rows="10" placeholder="请输入文字"></textarea>
+    <div class="clearfix">
+        <p id="span-left">超过字数限制了！</p>
+        <p id="span-right">还剩余<span>150</span>字！</p>
+    </div>
+    <input type="button" value="提交" id="btn">
+</div>
+</body>
+</html>

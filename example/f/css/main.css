@@ -1,0 +1,144 @@
+body{
+    padding-top: 50px;
+    background-color: #3fa9f5;
+}
+/*页头--自定义样式*/
+.header{
+    background:  url('img/header-bannerNew.jpg') no-repeat;
+}
+.header-banner-info{
+    padding-top: 200px;
+    color: #ffffff;
+    padding-bottom: 300px;
+}
+.header-banner-info h1{
+    font-size: 5em;
+}
+.header-banner-info small{
+    color: #ffffff;
+}
+.header-banner-info p{
+    font: 600 1.5em/2em "宋体";
+}
+.header-banner-info ul{
+    margin-top: 15px;
+}
+.header-banner-info i{
+    color: #eeeeee;
+}
+.social-icons li{
+    display: inline-block;
+    margin-right: 10px;
+    -webkit-transition: .2s;
+    -moz-transition: .2s;
+    -ms-transition: .2s;
+    -o-transition: .2s;
+    transition: .2s;
+}
+.social-icons a{
+    text-decoration: none;
+}
+.social-icons i{
+    font-size: 30px;
+}
+/*关于--自定义样式*/
+.about-section{
+    background: #ecffeb;
+    padding-top: 50px;
+}
+.about-section .about-header{
+    color: #48a060;
+    padding-bottom: 50px;
+}
+.about-content{
+    color: #458375;
+}
+.about-content-1 i{
+    color: #458375;
+}
+.about-content h3{
+    font-size: 2em;
+}
+.about-content p{
+    font-size: 1.5em;
+}
+.about-content-2{
+    text-align: center;
+}
+.about-content-2 img{
+    width: 270px;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    border: 20px solid rgba(200,200,200,0.2);
+}
+.language{
+    margin-top: 5px;
+}
+.language li{
+    display: inline-block;
+    height: 25px;
+    line-height: 25px;
+    list-style: none;
+    padding: 0;
+}
+.language span{
+    display: block;
+    height: 100%;
+    width: 100%;
+    line-height: inherit;
+    text-align: center;
+    background: #48a060;
+    color: #ffffff;
+}
+/*作品--自定义样式*/
+.works-section{
+    background: #ffffff;
+}
+.works-section .tab-content{
+    height: 300px;
+}
+.works-section h3{
+    color: #ffb600;
+}
+.works-section .works-content{
+    background: #ffffff;
+}
+.works-section .tab-content li{
+    list-style: none;
+    display: block;
+    height: 25px;
+    font-size: 20px;
+    margin-bottom: 5px;
+}
+.works-section a{
+    text-decoration: none;
+    display: inline-block;
+}
+/*页脚--自定义样式*/
+.contact{
+    background: #decfff;
+    color: #a67cff;
+}
+.QR-code div{
+    display: inline-block;
+    margin-right: 10px;
+}
+.QR-code img{
+    height: 150px;
+}
+/*动态效果*/
+#rotate{
+    width: 200px;
+    transform-origin: 100px 100px;
+}
+.social-icons li:hover{
+    transform: scale(1.1);
+}
+/*响应式布局*/
+@media (min-width: 1640px) {
+    .header{
+        width: 1640px;
+        margin: 0 auto;
+    }
+}

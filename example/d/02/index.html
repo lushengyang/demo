@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>多种弹出框</title>
+    <style>
+        body,p{
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            height: 2000px;
+        }
+        #popup{
+            height: 120px;
+            width: 370px;
+            padding: 30px;
+            border: 1px solid #000000;
+            background: #FFFFFF;
+            position: absolute;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+            z-index: 999;
+            display: none;
+        }
+        #popup p {
+            margin-bottom: 10px;
+            font: 16px/30px "宋体";
+            float: left;
+        }
+        #popup p label{
+            float: left;
+            width: 50px;
+            height: 30px;
+            text-align: right;
+            margin-right: 10px;
+            font-weight: 600;
+        }
+        #popup p input[type="text"],input[type="password"]{
+            height: 30px;
+            width: 300px;
+            border: 1px solid #888888;
+            outline: none;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+        }
+        #popup input[type="button"]{
+            height: 30px;
+            width: 200px;
+            background: dodgerblue;
+            color: #ffffff;
+            font-weight: 600;
+            outline: none;
+            border:none;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 60px;
+        }
+        #popup-close{
+            height: 20px;
+            width: 20px;
+            text-align: center;
+            font: 600 16px/20px "宋体";
+            border: 1px solid #000000;
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            border-radius: 3px;
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            cursor: pointer;
+        }
+        #popup-close:hover{
+            background: #3f89ec;
+            color: #ffffff;
+        }
+        #bgc{
+            position: absolute;
+            z-index: 998;
+            left: 0;
+            top: 0;
+            min-width: 1100px;
+            min-height: 768px;
+            opacity: 0.2;
+            filter:alpha(opacity=1);
+            background: #000;
+            display: none;
+        }
+    </style>
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script>
+        $(function () {
+            var $aBtn = $('#btn input');
+            var $popup = $('#popup');
+            var $bgc = $('#bgc');
+            var $pWidth = $popup.outerWidth();
+            var $pHeight = $popup.outerHeight();
+            var arr = [];
+            //不带遮罩的弹框
+            $aBtn.eq(0).on('click',function () {
+                arr = getPosition();
+                popupFn();
+            });
+            //带遮罩的弹框
+            $aBtn.eq(1).on('click',function () {
+                arr = getPosition();
+                popupFn();
+                bgcFn();
+            });
+            //可拖拽的弹框
+            $aBtn.eq(2).on('click',function () {
+                arr = getPosition();
+                popupFn();
+                drag($popup);
+            });
+            function popupFn() {
+                $popup.css({top:arr[4],left:arr[5]});
+                $popup.fadeIn('fast');
+            }
+            function bgcFn() {
+                $bgc.css('height',arr[0]);
+                $bgc.css('width',arr[1]);
+                $bgc.fadeIn('fast');
+            }
+            function getPosition() {
+                var $sh = $(window).scrollTop();
+                var $h = $(window).height();
+                var $w = $(window).width();
+                var $dh = $(document).height();
+                var $dw = $(document).width();
+                var t = ($h-$pHeight)/2+$sh;
+                var l = ($w-$pWidth)/2;
+                if (t<0) t=0;
+                if (l<0) l=0;
+                return [$dh,$dw,$h,$w,t,l];
+            }
+            //点击关闭按钮关闭弹窗
+            $('#popup-close').on('click',function () {
+                $popup.fadeOut('fast');
+                $bgc.fadeOut('fast');
+                $popup.unbind('mousedown');//取消弹窗上的拖拽事件
+            });
+            //当输入框获取、失去焦点时所改变的样式
+            $('input[type=text],input[type=password]').on({
+                'focus':function () {
+                    $(this).css('border-color','lightskyblue');
+                },
+                'blur':function () {
+                    $(this).css('border-color','#888888');
+                }
+            });
+            var oDiv = $('#div1');
+            //拖拽函数
+            function drag(obj) {
+                var deltaX = 0;
+                var deltaY = 0;
+                obj.bind('mousedown',start);
+                function start(e) {
+                    var ol = obj.offset().left;
+                    var ot = obj.offset().top;
+                    deltaX = e.pageX - ol;
+                    deltaY = e.pageY - ot;
+                    $(document).bind({
+                        'mousemove':move,
+                        'mouseup':stop
+                    })
+                }
+                function move(e) {
+                    obj.css({
+                       "left":(e.pageX-deltaX),
+                       "top" :(e.pageY-deltaY)
+                    });
+                    return false;
+                }
+                function stop() {
+                    $(document).unbind({
+                       "mousemove":move,
+                       "mouseup":stop
+                    });
+                }
+            }
+        })
+    </script>
+</head>
+<body>
+    <div id="btn">
+        <input type="button" value="不带遮罩的弹窗">
+        <input type="button" value="带遮罩的弹窗">
+        <input type="button" value="可拖动的弹框">
+    </div>
+    <div id="popup">
+        <form>
+            <p>
+                <label for="username">用户名</label>
+                <input type="text" name="username" id="username" placeholder="请输入用户名">
+            </p>
+            <p>
+                <label for="passward">密码</label>
+                <input type="password" name="passward" id="passward" placeholder="请输入密码">
+            </p>
+            <p>
+                <input type="button" value="立即登录">
+            </p>
+        </form>
+        <div id="popup-close">X</div>
+    </div>
+    <div id="bgc"></div>
+</body>
+</html>

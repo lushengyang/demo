@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>图片的随机移动</title>
+    <style>
+        body{
+            padding: 0;
+            margin: 0;
+            background: #cbd5eb;
+        }
+        #warp{
+            width: 300px;
+            height: 300px;
+            border: 1px solid #000000;
+            margin: 100px auto;
+            position: relative;
+        }
+        #warp img{
+            height: 100px;
+            width: 100px;
+            float: left;
+        }
+    </style>
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script>
+        $(function () {
+            var $img = $('img');
+            var posArr = [];
+            var blanIndex = 8;
+            var prveIndex = -1;
+            var cols = 3;
+            //每个位置所能移动的方向
+            var moveArr = [
+                [1,3],
+                [0,2,4],
+                [1,5],
+                [0,4,6],
+                [1,3,5,7],
+                [2,4,8],
+                [3,7],
+                [4,6,8],
+                [5,7]
+            ];
+            //将每个img的定位转换为绝对定位
+            $img.each(function () {
+               posArr.push({L:$(this).position().left,T:$(this).position().top});
+            });
+            $img.each(function (i) {
+                $(this).css({position:'absolute',left:posArr[i].L,top:posArr[i].T});
+            });
+            //给每个图片添加固定的索引
+            $img.each(function () {
+                $(this).attr('_index',$(this).index());
+            });
+            //图片运动
+            imgMove();
+            function imgMove() {
+                var nowArr = moveArr[blanIndex];
+                var filterArr = [];
+                //判断是否与前一个移动的相同
+                $.each(nowArr,function (i, elem) {
+                    if (elem != prveIndex){
+                        filterArr.push(elem);
+                    }
+                });
+                prveIndex = blanIndex;
+                //在几个可能的移动位置中随机选择一个与之交换位置
+                var nowIndex = filterArr[Math.floor(Math.random()*filterArr.length)];
+                //计算空白位置的top和left值
+                var targetL = (blanIndex%cols)*100;
+                var targetT = Math.floor(blanIndex/cols)*100;
+                var tmp = '';
+                $img.each(function () {
+                   if ($(this).attr('_index')==nowIndex){
+                       $(this).animate({top:targetT,left:targetL},1500,function () {
+                          tmp = blanIndex;
+                          blanIndex = $(this).attr('_index');
+                          $(this).attr('_index',tmp);
+
+                          imgMove();
+                       });
+                   }
+                });
+            }
+        })
+    </script>
+</head>
+<body>
+    <div id="warp">
+        <div id="images">
+            <img src="../img/淘宝图片1.jpg">
+            <img src="../img/淘宝图片2.jpg">
+            <img src="../img/淘宝图片3.jpg">
+            <img src="../img/淘宝图片4.jpg">
+            <img src="../img/淘宝图片5.jpg">
+            <img src="../img/淘宝图片6.jpg">
+            <img src="../img/淘宝图片7.jpg">
+            <img src="../img/淘宝图片8.jpg">
+        </div>
+    </div>
+</body>
+</html>

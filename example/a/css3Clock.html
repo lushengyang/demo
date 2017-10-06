@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>css3钟表</title>
+    <style>
+        ul{
+            padding: 0;
+            margin: 0;
+        }
+        li{
+            list-style: none;
+        }
+        #warp{
+            height: 250px;
+            width: 250px;
+            margin: 100px auto;
+            background: url("../images/clock.jpg");
+            -webkit-background-size: 250px 250px;
+            background-size: 250px 250px;
+            border-radius: 50%;
+            position: relative;
+        }
+        .hour,.second,.min{
+            position: absolute;
+            -webkit-transform-origin: bottom;
+            -moz-transform-origin: bottom;
+            -ms-transform-origin: bottom;
+            -o-transform-origin: bottom;
+            transform-origin: bottom;
+        }
+        .second{
+            height: 85px;
+            width: 2px;
+            background: #ff000a;
+            top: 40px;
+            left: 124px;
+        }
+        .min{
+            height: 60px;
+            width: 4px;
+            background: #000000;
+            top: 65px;
+            left: 123px;
+        }
+        .hour{
+            height: 40px;
+            width: 6px;
+            background: #000000;
+            top: 85px;
+            left: 122px;
+        }
+        .icon{
+            height: 16px;
+            width: 16px;
+            background: #000;
+            border-radius: 50%;
+            position: absolute;
+            top: 117px;
+            left: 117px;
+        }
+    </style>
+    <script>
+        window.onload =function () {
+
+            var oWarp = document.getElementById('warp');
+            cssClock(oWarp);
+
+
+            function cssClock(elem) {
+                var str = '<div class="second"></div><div class="min"></div><div class="hour"></div><div class="icon"></div>';
+                elem.innerHTML = str;
+                var oSeconds = elem.getElementsByClassName('second')[0];
+                var oMins = elem.getElementsByClassName('min')[0];
+                var oHours = elem.getElementsByClassName('hour')[0];
+                //让钟表开始运动
+                clockMove();
+                setInterval(clockMove,1000);
+                function clockMove() {
+                    var oData = new Date();
+                    var oSec = oData.getSeconds();
+                    var oMin = oData.getMinutes() + oSec/60;
+                    var oHour = oData.getHours() + oMin/60;
+                    oSeconds.style.transform = "rotate("+ oSec*6 +"deg)";
+                    oMins.style.transform = "rotate("+ oMin*6 +"deg)";
+                    oHours.style.transform = "rotate("+ oHour*30 +"deg)";
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+<div id="warp">
+    <div id="second"></div>
+    <div id="min"></div>
+    <div id="hour"></div>
+    <div id="icon"></div>
+</div>
+</body>
+</html>

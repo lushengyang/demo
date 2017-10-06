@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>动画版时钟</title>
+    <style>
+        body,ul,li{
+            margin: 0;
+            padding: 0;
+        }
+        li{
+            list-style: none;
+        }
+        #warp{
+            width: 400px;
+            margin: 50px auto;
+            overflow: hidden;
+        }
+        #warp li{
+            float: left;
+            width: 50px;
+            height: 70px;
+            position: relative;
+        }
+        #warp div{
+            position: absolute;
+            top: 0;
+            left:0;
+        }
+        #warp li img{
+            display: block;
+            width: 50px;
+            height: 70px;
+            border: 0;
+        }
+        .clearfix:after{
+            content: '.';
+            display: block;
+            height: 0;
+            line-height: 0;
+            visibility: hidden;
+            clear: both;
+        }
+        .clearfix{
+            zoom: 1;
+        }
+    </style>
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script>
+        $(function () {
+            var $aLi = $('#warp ul').find('li');
+//            将个位数转变为双位数
+            function changeTwo(num) {
+                return num<10 ? '0'+ num:num;
+            }
+            time();
+            //时间变化
+            function time() {
+                var times = new Date(),
+                    iHours = times.getHours(),
+                    iMin = times.getMinutes(),
+                    iSec = times.getSeconds(),
+                    str = changeTwo(iHours) + ':'+changeTwo(iMin) + ':'+changeTwo(iSec);
+                //根据时间数字选择显示的图片
+                function changeImg(li, index) {
+                    //冒号的闪动效果
+                    var oDiv  = $(li).find('div').eq(0);
+                    var $aImg = oDiv.find('img');
+                    if (str.charAt(index) == ':'){
+                        $aImg.eq(0).attr('src','../img/colon.JPG');
+                        setTimeout(function () {
+                            $aImg.eq(0).attr('src','../img/colon2.JPG');
+                        },500);
+                    }else {
+                        //数字的变化效果
+                        $aImg.eq(1).attr('src','../img/'+str.charAt(index)+'.JPG');
+                        if ($aImg.eq(0).attr('src')!=$aImg.eq(1).attr('src')){
+                            oDiv.animate({"top":"-70px"},500,'swing',function () {
+                                $aImg.eq(0).attr('src',$aImg.eq(1).attr('src'));
+                                oDiv.css('top','0px');
+                            });
+                        }
+                    }
+                }
+//                运动
+                for (var i=0;i<$aLi.length;i++){
+                    changeImg($aLi.eq(i),i);
+                }
+            }
+            setInterval(time,1000);
+        })
+    </script>
+</head>
+<body>
+    <div id="warp">
+        <ul class="clearfix">
+            <li>
+                <div>
+                    <img src="../img/8.JPG">
+                    <img src="../img/8.JPG">
+                </div>
+            </li>
+            <li>
+                <div>
+                    <img src="../img/8.JPG">
+                    <img src="../img/8.JPG">
+                </div>
+            </li>
+            <li>
+                <div>
+                    <img src="../img/colon.JPG">
+                    <img src="../img/colon.JPG">
+                </div>
+            </li>
+            <li>
+                <div>
+                    <img src="../img/8.JPG">
+                    <img src="../img/8.JPG">
+                </div>
+            </li>
+            <li>
+                <div>
+                    <img src="../img/8.JPG">
+                    <img src="../img/8.JPG">
+                </div>
+            </li>
+            <li>
+                <div>
+                    <img src="../img/colon.JPG">
+                    <img src="../img/colon.JPG">
+                </div>
+            </li>
+            <li>
+                <div>
+                    <img src="../img/8.JPG">
+                    <img src="../img/8.JPG">
+                </div>
+            </li>
+            <li>
+                <div>
+                    <img src="../img/8.JPG">
+                    <img src="../img/8.JPG">
+                </div>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>

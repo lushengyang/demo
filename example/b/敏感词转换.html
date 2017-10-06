@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>将单词首字母大写</title>
+    <style>
+        body{
+            background: #badeff;
+        }
+        #warp{
+            width: 830px;
+            margin: 100px auto;
+        }
+        textarea{
+            resize: none;
+            float: left;
+            text-indent: 2em;
+        }
+        input{
+            float: left;
+            height: 30px;
+            width: 60px;
+            border:none;
+            outline:none;
+            margin: 60px 10px 0;
+            background: #3f89ec;
+            font: 12px/30px "宋体";
+            color: #ffffff;
+            cursor: pointer;
+        }
+        .clearfix:after{
+            content: ".";
+            display: block;
+            clear: both;
+            height: 0;
+            line-height: 0;
+            visibility: hidden;
+
+        }
+        .clearfix{
+            zoom: 1;
+        }
+    </style>
+    <script>
+        window.onload = function () {
+            var oPreText = document.getElementById("pre-text");
+            var oNowText = document.getElementById("now-text");
+            var oBtn = document.getElementById('btn');
+            var reg = /日本|美国|韩国/g;
+            var str = '';
+            oBtn.onclick = function () {
+                fliterWord();
+            };
+            function fliterWord() {
+                str = oPreText.value;
+                var nowStr = str.replace(reg,function (word) {
+                    var n = '';
+                    for (var i=0;i<word.length;i++){
+                        n += '*';
+                    }
+                    return n;
+                });
+                oNowText.value = nowStr;
+            };
+
+        }
+    </script>
+</head>
+<body>
+<div id="warp" class="clearfix">
+    <textarea id="pre-text" cols="50" rows="10" placeholder="日本|美国|韩国 将会被过滤"></textarea>
+    <input type="button" value="过滤" id="btn">
+    <textarea id="now-text" cols="50" rows="10"></textarea>
+</div>
+</body>
+</html>

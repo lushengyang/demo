@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap注册实例</title>
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <script src="../js/html5shiv.js"></script>
+    <script src="../js/respond.min.js"></script>
+    <style>
+        #from-title{
+            color: #7a85da;
+        }
+        .color-line{
+            height: 5px;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+            background-image:-webkit-linear-gradient(left,#62c2e4 25%, #669ae1 50%, #c49cde 75%, #f0776c 100%);
+            background-image:-moz-linear-gradient(left,#62c2e4 25%, #669ae1 50%, #c49cde 75%, #f0776c 100%);
+            background-image:-o-linear-gradient(left,#62c2e4 25%, #669ae1 50%, #c49cde 75%, #f0776c 100%);
+            background-image:linear-gradient(left,#62c2e4 25%, #669ae1 50%, #c49cde 75%, #f0776c 100%);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+            <form role="form">
+                <h2 id="from-title">请注册 <small>通行证</small></h2>
+                <hr class="color-line">
+                <div class="row">
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <input type="text" name="first_name" id="first_name" class="form-control input-lg" placeholder="姓氏"tabindex="1">
+                        </div>
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <input type="text" name="last_name" id="last_name" class="form-control input-lg" placeholder="名字"tabindex="2">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input type="text" name="display_name" id="display_name" class="form-control input-lg" placeholder="请输入昵称" tabindex="3">
+                </div>
+                <div class="form-group">
+                    <input type="email" name="email" id="email" class="form-control input-lg" placeholder="电子邮箱" tabindex="6">
+                </div>
+                <div class="row">
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <input type="password" name="pass_ward_first" id="pass_ward_first" class="form-control input-lg" placeholder="请输入密码" tabindex="4">
+                        </div>
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <input type="password" name="pass_ward_last" id="pass_ward_last" class="form-control input-lg" placeholder="请再次输入密码" tabindex="5">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-8 col-md-8 col-sm-offset-2 col-md-offset-2">
+                        <div id="form-terms">
+                            <input type="checkbox">
+                            <span>
+                                我已阅读并同意相关
+                                <div class="dropdown" style="display: inline-block">
+                                    <a href="javascript:;" class="dropdown-toggle"id="dropdownMenu1" data-toggle="dropdown">
+                                        服务条款和隐私政策<span class="caret"></span>
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                        <li><a href="#" data-toggle="modal" data-target="#Contextuel1">服务条款</a></li>
+                                        <li><a href="#" data-toggle="modal" data-target="#Contextuel2">隐私政策</a></li>
+                                    </ul>
+                                </div>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <hr class="color-line">
+                <div class="row">
+                    <div class="col-xs-6 col-md-6">
+                        <input type="reset" value="清空" class="btn btn-danger btn-block btn-lg" tabindex="7">
+                    </div>
+                    <div class="col-xs-6 col-md-6">
+                        <input type="submit" value="注册" class="btn btn-primary btn-block btn-lg" tabindex="8">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!--弹出框-->
+    <!--服务条款-->
+    <div class="modal fade" id="Contextuel1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="myModalLabel1">隐私政策</h4>
+                </div>
+                <div class="modal-body">
+                    <p>欢迎您使用腾讯的服务！</p>
+                    <p>为使用腾讯的服务，您应当阅读并遵守《腾讯服务协议》（以下简称“本协议”）和《QQ号码规则》。请您务必审慎阅读、充分理解各条款内容，特别是免除或者限制责任的条款、管辖与法律适用条款，以及开通或使用某项服务的单独协议。限制、免责条款可能以黑体加粗或加下划线的形式提示您重点注意。除非您已阅读并接受本协议所有条款，否则您无权使用腾讯提供的服务。您使用腾讯的服务即视为您已阅读并同意上述协议的约束。</p>
+                    <p>如果您未满18周岁，请在法定监护人的陪同下阅读本协议，并特别注意未成年人使用条款。</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">已了解</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--隐私政策-->
+    <div class="modal fade" id="Contextuel2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="myModalLabel2">服务条款</h4>
+                </div>
+                <div class="modal-body">
+                    腾讯重视用户的隐私。您在使用我们的服务时，我们可能会收集和使用您的相关信息。我们希望通过本《隐私政策》向您说明，在使用我们的服务时，我们如何收集、使用、储存和分享这些信息，以及我们为您提供的访问、更新、控制和保护这些信息的方式。本《隐私政策》与您所使用的腾讯服务息息相关，希望您仔细阅读，在需要时，按照本《隐私政策》的指引，作出您认为适当的选择。本《隐私政策》中涉及的相关技术词汇，我们尽量以简明扼要的表述，并提供进一步说明的链接，以便您的理解。
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">已了解</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<script src="../js/bootstrap.min.js"></script>
+</body>
+</html>

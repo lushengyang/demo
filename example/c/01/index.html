@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>360°图片旋转效果</title>
+    <link rel="stylesheet" href="css.css">
+    <script>
+        window.onload =function () {
+            var oBgc =document.getElementById('bgc'),
+                oImg =document.getElementById('img1'),
+                olastImg = oImg,
+                oW =document.getElementById('warp'),
+                oRate = document.getElementById('rate'),
+                oText = oRate.getElementsByTagName('span')[0],
+                aImg = document.getElementsByTagName('img'),
+                oBar = document.getElementById('rate-bar'),
+                iImgLength = 77,
+                imgLoad = 1,
+                x= 0,
+                ispeed =0,
+                lastX =0,
+                timer = null;
+
+            //等待加载所有图片
+            for (var i=1;i<iImgLength;i++){
+                (function (i) {
+                    //图片预加载
+                    var oNewImg = new Image();
+                    //每一张图片加载后
+                    oNewImg.onload = function () {
+                        //图片加载的load效果
+                        oText.innerHTML = oBar.style.width = Math.ceil(100*imgLoad/iImgLength) + '%';
+                        var oImages = document.createElement("img");
+                        oImages.src = this.src;
+                        oImages.style.display = "none";
+                        oW.appendChild(oImages);
+                        if (++imgLoad==iImgLength) onLoad();
+                    };
+                    oNewImg.src = 'img/miaov%20('+(i)+').jpg';//加载图片
+                })(i);
+            }
+            //显示效果
+            function onLoad() {
+                //所有的图片全部加载完毕
+                oBgc.style.display = "none";
+                oRate.style.display = "none";
+                oImg.style.display = "inline-block";
+                document.onmousedown = function (ev) {
+                    clearTimeout(timer);
+                    var ev = ev||event;
+                    var disX = ev.clientX - x;
+                    document.onmousemove = function (ev) {
+                        var ev = ev||event;
+                        x = ev.clientX - disX;
+                        toMove();
+                        ispeed = x - lastX;
+                        lastX = x;
+                        return false;
+                    };
+                    document.onmouseup = function (ev) {
+                        var ev = ev||event;
+                        document.onmousemove = null;
+                        document.onmouseup = null;
+                        //鼠标抬起后缓慢停止效果
+                        timer = setInterval(function () {
+                            x += ispeed;
+                            toMove();
+                        },30);
+                    }
+                }
+            };
+            function toMove() {
+                //防止转速过快
+                if (ispeed>50){
+                    ispeed = 50;
+                }else if (ispeed<-50){
+                    ispeed =-50;
+                }
+                //减速转动
+                if (ispeed>0){
+                    ispeed--;
+                }else {
+                    ispeed++;
+                }
+                if (ispeed==0)clearInterval(timer);
+                //切换图片
+                var l = parseInt(-x/10);
+                if (l>0){
+                    l %= 77;
+                }else{
+                    l += (-Math.floor(l/77)*77);
+                }
+                if (olastImg!=aImg[l]){
+                    console.log(l);
+                    olastImg.style.display = "none";
+                    aImg[l].style.display = "block";
+                    olastImg = aImg[l];
+                }
+            };
+        }
+    </script>
+</head>
+<body>
+    <div id="warp">
+        <div id="rate">
+            正在加载中……<span>0%</span>
+            <div id="rate-bar"></div>
+        </div>
+        <img src="img/miaov%20(0).jpg" alt="" id="img1">
+    </div>
+    <div id="bgc"></div>
+</body>
+</html>

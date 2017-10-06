@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>评分效果</title>
+    <style>
+        #estimate{
+            height: 50px;
+            width: 250px;
+            line-height: 50px;
+            border: 1px solid #888888;
+            margin: 100px auto;
+            text-align: center;
+            padding-left: 20px;
+        }
+        #again{
+            height: 20px;
+            width: 80px;
+            background: #e4b43e;
+            color: #ffffff;
+            font: 600 15px/20px 宋体;
+            text-align: center;
+            margin: 0 auto;
+            cursor: pointer;
+        }
+        #again:hover{
+            background: #daa20f;
+        }
+        p{
+            margin: 0 0 0 10px;
+            float: left;
+        }
+        #explain{
+            color: #888888;
+            font-size: larger;
+        }
+        ul{
+            float: left;
+            margin: 0;
+            padding: 0;
+        }
+        ul li{
+            list-style: none;
+            float: left;
+            margin: 0 2px;
+            cursor: pointer;
+        }
+    </style>
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script>
+        $(function () {
+
+            var onOff = true;
+            var aText = ['极差','很差','还行','不错','推荐'];
+            var aImg = ['../img/星星评分1.gif','../img/星星评分2.gif','../img/星星评分3.gif','../img/星星评分4.gif'];
+
+            $('li').hover(function () {
+
+                var index = $(this).index();
+
+                if (onOff){
+                    if ($(this).index() == 0){
+                        $(this).find('img').attr('src',aImg[3]);
+                        $('#explain').text(aText[0]);
+                    }else if ($(this).index() == 1){
+
+                        $('li').each(function (i,elem) {
+
+                            if (i<=index){
+                                $(elem).find('img').attr('src',aImg[3]);
+                            }else{
+                                $(elem).find('img').attr('src',aImg[0]);
+                            }
+
+                        });
+                        $('#explain').text(aText[1]);
+                    }else if ($(this).index() == 2){
+
+                        $('li').each(function (i,elem) {
+
+                            if (i<=index){
+                                $(elem).find('img').attr('src',aImg[1]);
+                            }else{
+                                $(elem).find('img').attr('src',aImg[0]);
+                            }
+
+                        });
+                        $('#explain').text(aText[2]);
+                    }else if ($(this).index() == 3){
+
+                        $('li').each(function (i,elem) {
+
+                            if (i<=index){
+                                $(elem).find('img').attr('src',aImg[1]);
+                            }else{
+                                $(elem).find('img').attr('src',aImg[0]);
+                            }
+
+                        });
+                        $('#explain').text(aText[3]);
+                    }else if ($(this).index() == 4){
+
+                        $('li').each(function (i,elem) {
+
+                            if (i<=index){
+                                $(elem).find('img').attr('src',aImg[2]);
+                            }else{
+                                $(elem).find('img').attr('src',aImg[0]);
+                            }
+
+                        });
+                        $('#explain').text(aText[4]);
+                    }
+                }
+
+            },function () {
+                if (onOff){
+                    $('li').find('img').attr('src',aImg[0]);
+                    $('#explain').text('');
+                }
+            });
+
+            $('li').click(function () {
+                onOff = false;
+                alert('感谢您的评价~')
+            });
+
+            $('#again').click(function () {
+
+                onOff = true;
+                $('li').find('img').attr('src',aImg[0]);
+                $('#explain').text('');
+
+            });
+
+        })
+    </script>
+</head>
+<body>
+    <div id="estimate">
+        <p>您的评价：</p>
+        <ul>
+            <li><img src="../img/星星评分1.gif"></li>
+            <li><img src="../img/星星评分1.gif"></li>
+            <li><img src="../img/星星评分1.gif"></li>
+            <li><img src="../img/星星评分1.gif"></li>
+            <li><img src="../img/星星评分1.gif"></li>
+        </ul>
+        <p id="explain"></p>
+    </div>
+    <div id="again">重新评价</div>
+</body>
+</html>

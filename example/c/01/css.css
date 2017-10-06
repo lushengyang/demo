@@ -1,0 +1,44 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+#warp{
+    height: 378px;
+    width: 640px;
+    margin: 100px auto;
+    position: relative;
+    z-index: 3;
+}
+#warp img{
+    position: absolute;
+    display: none;
+}
+#bgc{
+    height: 100%;
+    width: 100%;
+    background: #ffd9ca;
+    opacity: .6;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+#warp #rate{
+    height: 40px;
+    width: 200px;
+    font: 14px/20px "宋体";
+    color: #888888;
+    background: url("img/bar.png") no-repeat bottom;
+    overflow: hidden;
+    text-align: center;
+    z-index: 2;
+    position: absolute;
+    top: 169px;
+    left: 220px;
+}
+#warp #rate-bar{
+    height: 18px;
+    width: 0px;
+    background: url("img/bar_line.gif") repeat-x;
+    border: 1px solid #ffffff;
+}

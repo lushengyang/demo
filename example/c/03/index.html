@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>整个翻页</title>
+    <link rel="stylesheet" href="css.css">
+    <script>
+        window.onload = function () {
+            var oBox = document.getElementById('box');
+            var oPrve = document.getElementById('prev');
+            var oNext = document.getElementById('next');
+            var oContainer = document.getElementById('container');
+            var oMoveBox =document.getElementById('move-box');
+            var len = oContainer.offsetWidth;
+            var pages = 4;
+            var now = 0;
+            var timer = null;
+            //自动轮换
+            function autoMOve() {
+                timer = setInterval(function () {
+                    oNext.onclick();
+                },3000);
+            }
+            //鼠标悬浮停止自动切换
+            oBox.onmouseover = function () {
+                clearInterval(timer);
+            };
+            //鼠标移开自动切换
+            oBox.onmouseout = function () {
+                autoMOve();
+            };
+            //下一组
+            oNext.onclick = function () {
+                now ++;
+                if ( now== pages){
+                    now = 0;
+                }
+                action(oMoveBox,"left",-now*len);
+            };
+            //上一组
+            oPrve.onclick = function () {
+                if ( now === 0){
+                    now = pages;
+                }
+                now -- ;
+                action(oMoveBox,"left",-now*len);
+            };
+            //获取属性值的兼容
+            function css(obj,attr) {
+                if (obj.currentStyle){
+                    return obj.currentStyle[attr];
+                }else{
+                    return getComputedStyle(obj,false)[attr];
+                }
+            };
+            //运动函数
+            function action(obj, attr, target, fn) {
+                obj.timer && clearInterval(obj.timer);
+                obj.timer = setInterval(function () {
+                    var onOff = true;
+                    var cur = parseInt(css(obj,attr));
+                    var speed = (target-cur)/10;
+                    if (target != cur){
+                        onOff = false;
+                        obj.style[attr] = speed + cur + 'px';
+                    }
+                    if (onOff){
+                        clearInterval(obj.timer);
+                        obj.timer = null;
+                        fn && fn();
+                    }
+                },30)
+            }
+        }
+    </script>
+</head>
+<body>
+    <div id="box" class="clearfix">
+        <a href="javascript:;" id="prev" class="btn"><i></i></a>
+        <div id="container">
+            <div id="move-box">
+                <ul class="clearfix">
+                    <li>
+                        <div class="pic">
+                            <a href="javascript:;">
+                                <img src="img2/a-1.jpg" alt="">
+                            </a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="pic">
+                            <a href="javascript:;">
+                                <img src="img2/a-2.jpg" alt="">
+                            </a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="pic">
+                            <a href="javascript:;">
+                                <img src="img2/a-3.jpg" alt="">
+                            </a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="pic">
+                            <a href="javascript:;">
+                                <img src="img2/a-4.jpg" alt="">
+                            </a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="pic">
+                            <a href="javascript:;">
+                                <img src="img2/a-5.jpg" alt="">
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+                <ul class="clearfix">
+                    <li>
+                        <div class="pic">
+                            <a href="javascript:;">
+                                <img src="img2/b-1.jpg" alt="">
+                            </a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="pic">
+                            <a href="javascript:;">
+                                <img src="img2/b-2.jpg" alt="">
+                            </a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="pic">
+                            <a href="javascript:;">
+                                <img src="img2/b-3.jpg" alt="">
+                            </a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="pic">
+                            <a href="javascript:;">
+                                <img src="img2/b-4.jpg" alt="">
+                            </a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="pic">
+                            <a href="javascript:;">
+                                <img src="img2/b-5.jpg" alt="">
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+                <ul class="clearfix">
+                    <li>
+                        <div class="pic">
+                            <a href="javascript:;">
+                                <img src="img2/c-1.png" alt="">
+                            </a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="pic">
+                            <a href="javascript:;">
+                                <img src="img2/c-2.jpg" alt="">
+                            </a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="pic">
+                            <a href="javascript:;">
+                                <img src="img2/c-3.jpg" alt="">
+                            </a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="pic">
+                            <a href="javascript:;">
+                                <img src="img2/c-4.jpg" alt="">
+                            </a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="pic">
+                            <a href="javascript:;">
+                                <img src="img2/c-5.jpg" alt="">
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+                <ul class="clearfix">
+                    <li>
+                        <div class="pic">
+                            <a href="javascript:;">
+                                <img src="img2/d-1.jpg" alt="">
+                            </a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="pic">
+                            <a href="javascript:;">
+                                <img src="img2/d-2.jpg" alt="">
+                            </a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="pic">
+                            <a href="javascript:;">
+                                <img src="img2/d-3.jpeg" alt="">
+                            </a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="pic">
+                            <a href="javascript:;">
+                                <img src="img2/d-4.jpg" alt="">
+                            </a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="pic">
+                            <a href="javascript:;">
+                                <img src="img2/d-4.jpg" alt="">
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <a href="javascript:;" id="next" class="btn"><i></i></a>
+    </div>
+</body>
+</html>

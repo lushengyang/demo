@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>将单词首字母大写</title>
+    <style>
+        body{
+            background: #badeff;
+        }
+        #warp{
+            width: 830px;
+            margin: 100px auto;
+        }
+        textarea{
+            resize: none;
+            float: left;
+            text-indent: 2em;
+        }
+        input{
+            float: left;
+            height: 30px;
+            width: 60px;
+            border:none;
+            outline:none;
+            margin: 60px 10px 0;
+            background: #3f89ec;
+            font: 12px/30px "宋体";
+            color: #ffffff;
+            cursor: pointer;
+        }
+        .clearfix:after{
+            content: ".";
+            display: block;
+            clear: both;
+            height: 0;
+            line-height: 0;
+            visibility: hidden;
+
+        }
+        .clearfix{
+            zoom: 1;
+        }
+    </style>
+    <script>
+        window.onload = function () {
+            var oPreText = document.getElementById("pre-text");
+            var oNowText = document.getElementById("now-text");
+            var oBtn = document.getElementById('btn');
+            var str = '';
+            oBtn.onclick = function () {
+                changeBig();
+            };
+        function changeBig() {
+            str = oPreText.value;
+            var nowStr = str.replace(/\b\w+\b/g,function (word) {
+                return word.substring(0,1).toUpperCase() + word.substring(1);
+            });
+            oNowText.value = nowStr;
+        };
+
+        }
+    </script>
+</head>
+<body>
+    <div id="warp" class="clearfix">
+        <textarea id="pre-text" cols="50" rows="10">If you often volunteer in a shelter (animal or human), you know how it feels to help those in need. You see many animals and people suffer from starvation, diseases, and loneliness. You see them die. Your heart is bleeding and you cannot stop crying, but you get up and keep helping the others. You stay emotionally strong and that strength is growing until you stop caring. Why are doctors so emotionally strong? Finally, remember that life is jam-packed with ups and downs. The obstacles and problems are a part of your life. Can handle and solve them? Perfect. Can’t do it? It is totally normal. After all, you are just human. We learn a lot more useful things from failures and misfortunes than we do from success and happiness.</textarea>
+        <input type="button" value="转换" id="btn">
+        <textarea id="now-text" cols="50" rows="10"></textarea>
+    </div>
+</body>
+</html>
